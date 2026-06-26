@@ -1,11 +1,33 @@
 ---
 import "../styles/global.css";
+
 interface Props {
   title: string;
   description?: string;
+  ogType?: "website" | "article";
+  image?: string; // path (absolute or site-relative) to a social image
+  publishedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description = "Field notes on building a platform where every customer designs their own database." } = Astro.props;
+
+const {
+  title,
+  description = "Working notes on the systems I build — data platforms, voice agents, and systems engineering. Written to be readable even if it's not your corner of the stack.",
+  ogType = "website",
+  image = "/og-default.svg",
+  publishedTime,
+  tags = [],
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const SITE_NAME = "Anirudh — Notebook";
+const AUTHOR = "Anirudh";
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const rssUrl = new URL("/rss.xml", Astro.site);
 ---
 
 <!doctype html>
@@ -15,11 +37,41 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={AUTHOR} />
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-image-preview:large" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href={rssUrl} />
+
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    {ogType === "article" && publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    {ogType === "article" && <meta property="article:author" content={AUTHOR} />}
+    {ogType === "article" && tags.map((t) => <meta property="article:tag" content={t} />)}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -13,9 +13,34 @@ const { title, dek, series, part, date, readingTime, tags } = post.data;
 const fmtDate = date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 const partLabel = part === 0 ? "Series intro" : `Part ${part}`;
 const s = seriesBySlug[series];
+
+const url = new URL(`/posts/${post.slug}/`, Astro.site).toString();
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: dek,
+  datePublished: date.toISOString(),
+  dateModified: date.toISOString(),
+  author: { "@type": "Person", name: "Anirudh", url: "https://blog.welldun.ai" },
+  publisher: { "@type": "Person", name: "Anirudh" },
+  mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  url,
+  image: new URL("/og-default.svg", Astro.site).toString(),
+  articleSection: s?.title ?? series,
+  keywords: tags.join(", "),
+  isPartOf: { "@type": "CreativeWorkSeries", name: s?.title ?? series },
+};
 ---
 
-<Base title={`${title} · ${s?.title ?? "Notebook"}`} description={dek}>
+<Base
+  title={`${title} · ${s?.title ?? "Notebook"}`}
+  description={dek}
+  ogType="article"
+  publishedTime={date}
+  tags={tags}
+  jsonLd={jsonLd}
+>
   <article>
     <div class="wrap">
       <header class="article-head rise">
