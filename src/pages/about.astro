@@ -1,0 +1,78 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: `About ${SITE.name}`,
+  url: new URL("/about/", SITE.url).toString(),
+  publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
+  author: { "@type": "Person", name: SITE.author, url: SITE.authorUrl },
+};
+---
+
+<Base
+  title={`About · ${SITE.name}`}
+  description="welldun is a one-builder lab for multi-tenant software + AI infrastructure. About the projects, the through-line, and me."
+  jsonLd={jsonLd}
+>
+  <section class="wrap">
+    <header class="article-head rise">
+      <span class="eyebrow">About</span>
+      <h1>welldun</h1>
+      <p class="dek">Building at the seam of software and AI — and writing up how it works.</p>
+    </header>
+
+    <div class="prose rise rise-2">
+      <p>
+        <strong>welldun</strong> is where I build and document practical
+        <strong>software + AI infrastructure</strong>. The pattern across everything here is
+        the same: <strong>multi-tenant by default</strong>, bring-your-own-keys, with security
+        and reliability treated as features rather than afterthoughts — and AI used where it
+        genuinely earns its place, not as decoration.
+      </p>
+
+      <h2>What's being built</h2>
+      <ul>
+        <li>
+          <strong>Entity platform</strong> (<em>Drafting Table</em>) — a platform where each
+          customer defines their own entities, fields, and relationships, and the system
+          generates the storage, validation, APIs, and analytics from those definitions.
+          No per-customer code. <a href="/series/drafting-table/">Read the series →</a>
+        </li>
+        <li>
+          <strong>Voice infra</strong> — a Retell-style, multi-tenant voice-calling backend:
+          STT + LLM + TTS orchestrated end to end, bring-your-own provider keys (stored with
+          envelope encryption), consumable by any third party over a plain API.
+        </li>
+        <li>
+          <strong>Email infra</strong> — a multi-tenant email-sending API: connect your own
+          SendGrid/Resend keys, send through one reliable surface, with a Postgres work queue,
+          circuit breaking, idempotent writes, and signed delivery webhooks.
+        </li>
+        <li>
+          <strong>Workflow automation</strong> — a visual builder (React Flow) over a durable
+          execution engine, where adding a custom block is a single file.
+        </li>
+      </ul>
+
+      <p>
+        The writing here is the running field notebook for these — the architecture bets, the
+        gotchas, and the things that only show up once you ship and measure.
+      </p>
+
+      <h2>Me</h2>
+      <p>
+        I'm {SITE.author}. Previously at <strong>Stripe</strong>; now founder of
+        <strong>Valyx</strong>, a B2B startup. I like building systems and taking them apart in
+        writing — the kind of write-up I wish existed when I was figuring the thing out.
+      </p>
+
+      <p>
+        Reach me at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, or follow along via the
+        <a href="/rss.xml">RSS feed</a>.
+      </p>
+    </div>
+  </section>
+</Base>

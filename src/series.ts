@@ -1,5 +1,5 @@
 // Series metadata. A "series" groups related posts (a post's `series` frontmatter is one
-// of these slugs). Add a new entry here when you start a new multi-part topic.
+// of these slugs) — typically one welldun project. Add an entry when you start a new one.
 export interface Series {
   slug: string;
   title: string;
@@ -11,13 +11,19 @@ export const series: Series[] = [
   {
     slug: "drafting-table",
     title: "Drafting Table",
-    dek: "Building a multi-tenant platform where every customer designs their own database.",
+    dek: "Building a multi-tenant platform where every customer designs their own database — the entity platform.",
     status: "active",
   },
   {
-    slug: "voice-agents",
-    title: "Voice Agents",
-    dek: "Notes on building real-time voice agents — latency, turn-taking, and the messy bits.",
+    slug: "voice-infra",
+    title: "Voice Infra",
+    dek: "A multi-tenant voice-calling backend — STT + LLM + TTS, bring-your-own-keys, consumable by any third party.",
+    status: "planned",
+  },
+  {
+    slug: "email-infra",
+    title: "Email Infra",
+    dek: "A multi-tenant email-sending API — BYO SendGrid/Resend, envelope encryption, a Postgres work queue, signed webhooks.",
     status: "planned",
   },
 ];

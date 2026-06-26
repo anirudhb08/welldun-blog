@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import { series as allSeries, seriesBySlug } from "../series";
+import { SITE } from "../site";
 
 const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.data.part - b.data.part,
@@ -9,21 +10,20 @@ const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
 const countFor = (slug: string) => posts.filter((p) => p.data.series === slug).length;
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-const site = Astro.site!.toString();
+const site = SITE.url;
 const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Anirudh — Notebook",
+    name: SITE.name,
     url: site,
-    description:
-      "Working notes on the systems I build — data platforms, voice agents, and systems engineering.",
-    author: { "@type": "Person", name: "Anirudh" },
+    description: SITE.description,
+    publisher: { "@type": "Organization", name: SITE.name, url: site },
   },
   {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "Anirudh — Notebook",
+    name: SITE.name,
     url: site,
     blogPost: posts.slice(0, 10).map((p) => ({
       "@type": "BlogPosting",
@@ -35,25 +35,25 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Anirudh — building things, and writing about how they actually work" jsonLd={jsonLd}>
+<Base title={`${SITE.name} — ${SITE.tagline}`} jsonLd={jsonLd}>
   <section class="wrap">
     <div class="hero">
-      <p class="eyebrow kicker rise">Notebook</p>
+      <p class="eyebrow kicker rise">welldun · software × AI</p>
       <h1 class="rise rise-2">
-        I build things, and write about how they <span class="ital">actually</span> work.
+        Building at the seam of <span class="ital">software and AI</span>.
       </h1>
       <p class="dek rise rise-3">
-        Working notes on the systems I build — data platforms, voice agents, and whatever
-        I'm currently nerding out on. Written to be readable even if it's not your corner
-        of the stack.
+        welldun is where I build practical, multi-tenant infrastructure — and write up how it
+        actually works. Field notes on the bets, the gotchas, and the things you only learn
+        by shipping and measuring.
       </p>
     </div>
 
     <hr class="rule" />
 
-    <div class="section-head" id="series">
-      <h2 class="section-title">Series</h2>
-      <span class="section-note">multi-part deep dives</span>
+    <div class="section-head" id="projects">
+      <h2 class="section-title">What I'm building</h2>
+      <span class="section-note">projects, written up as series</span>
     </div>
     <div class="series-grid">
       {allSeries.map((s) => {
@@ -101,11 +101,11 @@ const jsonLd = [
 
     <hr class="rule-dash" />
 
-    <div id="about" class="aside">
-      <span class="label">About</span>
-      I'm Anirudh. I like building systems and taking them apart in writing — the bets, the
-      gotchas, and the things you only learn by measuring. This notebook collects those
-      write-ups across whatever I'm working on. More series are on the way.
+    <div class="aside">
+      <span class="label">About welldun</span>
+      A one-builder lab for software + AI infrastructure — multi-tenant by default, with
+      security and reliability treated as features, and AI used where it earns its place.
+      <a href="/about/">More about welldun and me →</a>
     </div>
   </section>
 </Base>

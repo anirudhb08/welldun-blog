@@ -7,8 +7,8 @@ const posts = await getCollection("posts", ({ data }) => !data.draft);
 // one entry per generated PNG: a site default + every post
 const pages: Record<string, { title: string; description: string }> = {
   default: {
-    title: "Building things, and writing about how they actually work.",
-    description: "Field notes on data platforms, voice agents, and systems engineering.",
+    title: "welldun — building at the seam of software and AI.",
+    description: "Field notes on multi-tenant infrastructure: entity platforms, voice, email.",
   },
 };
 for (const p of posts) {
