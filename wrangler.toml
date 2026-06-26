@@ -1,0 +1,5 @@
+# Cloudflare Pages config for this static Astro site.
+# Lets `wrangler pages deploy` find the project + output dir, and documents the
+# build output location for the dashboard.
+name = "welldun-blog"
+pages_build_output_dir = "dist"
