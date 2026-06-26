@@ -1,0 +1,54 @@
+---
+import Base from "./Base.astro";
+import type { CollectionEntry } from "astro:content";
+import { seriesBySlug } from "../series";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  prev?: CollectionEntry<"posts">;
+  next?: CollectionEntry<"posts">;
+}
+const { post, prev, next } = Astro.props;
+const { title, dek, series, part, date, readingTime, tags } = post.data;
+const fmtDate = date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+const partLabel = part === 0 ? "Series intro" : `Part ${part}`;
+const s = seriesBySlug[series];
+---
+
+<Base title={`${title} · ${s?.title ?? "Notebook"}`} description={dek}>
+  <article>
+    <div class="wrap">
+      <header class="article-head rise">
+        <span class="eyebrow">
+          <a href={`/series/${series}/`} class="crumb">{s?.title ?? series}</a> — {partLabel}
+        </span>
+        <h1>{title}</h1>
+        <p class="dek">{dek}</p>
+        <div class="article-meta">
+          <span>{fmtDate}</span>
+          {readingTime && <span>· {readingTime}</span>}
+          {tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </header>
+
+      <div class="prose rise rise-2">
+        <slot />
+      </div>
+
+      <nav class="pager">
+        {prev ? (
+          <a href={`/posts/${prev.slug}/`}>
+            <span class="dir">← Previous</span>
+            <span class="t">{prev.data.title}</span>
+          </a>
+        ) : <span />}
+        {next ? (
+          <a class="next" href={`/posts/${next.slug}/`}>
+            <span class="dir">Next →</span>
+            <span class="t">{next.data.title}</span>
+          </a>
+        ) : <span />}
+      </nav>
+    </div>
+  </article>
+</Base>

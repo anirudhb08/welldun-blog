@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Field notes on building a platform where every customer designs their own database." } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap-wide bar">
+        <a class="brand" href="/">
+          <span class="brand-mark">◆</span>
+          <span class="brand-name">Anirudh</span>
+          <span class="brand-sub">notebook</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/#series">Series</a>
+          <a href="/#about">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap-wide bar">
+        <span>Anirudh's notebook — building things, and writing about how they work.</span>
+        <span>Built with Astro · deployed on Cloudflare Pages</span>
+      </div>
+    </footer>
+  </body>
+</html>

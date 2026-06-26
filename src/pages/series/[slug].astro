@@ -1,0 +1,46 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { series as allSeries, seriesBySlug } from "../../series";
+
+export async function getStaticPaths() {
+  // only build pages for series that actually have published posts
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  const withPosts = new Set(posts.map((p) => p.data.series));
+  return allSeries
+    .filter((s) => withPosts.has(s.slug))
+    .map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const meta = seriesBySlug[slug!];
+const posts = (await getCollection("posts", ({ data }) => !data.draft && data.series === slug)).sort(
+  (a, b) => a.data.part - b.data.part,
+);
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+---
+
+<Base title={`${meta.title} — a series`} description={meta.dek}>
+  <section class="wrap">
+    <div class="hero">
+      <p class="eyebrow kicker rise"><a href="/" class="crumb">Notebook</a> / Series</p>
+      <h1 class="rise rise-2">{meta.title}</h1>
+      <p class="dek rise rise-3">{meta.dek}</p>
+    </div>
+
+    <hr class="rule" />
+
+    <nav class="toc">
+      {posts.map((p) => (
+        <a class="entry" href={`/posts/${p.slug}/`}>
+          <span class="entry-no mono">{String(p.data.part).padStart(2, "0")}</span>
+          <div class="entry-body">
+            <h2>{p.data.title}</h2>
+            <p class="dek">{p.data.dek}</p>
+          </div>
+          <span class="entry-meta">{p.data.readingTime ?? ""}<br />{fmt(p.data.date)}</span>
+        </a>
+      ))}
+    </nav>
+  </section>
+</Base>
