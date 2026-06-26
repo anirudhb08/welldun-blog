@@ -1,5 +1,8 @@
-# Cloudflare Pages config for this static Astro site.
-# Lets `wrangler pages deploy` find the project + output dir, and documents the
-# build output location for the dashboard.
+# Cloudflare Workers static-assets config for this static Astro site.
+# Cloudflare's Git integration created a Workers project (deploy command: `wrangler deploy`),
+# so we serve the built `dist/` as an assets-only Worker — no server code needed.
 name = "welldun-blog"
-pages_build_output_dir = "dist"
+compatibility_date = "2026-06-26"
+
+[assets]
+directory = "./dist"
