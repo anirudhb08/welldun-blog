@@ -15,6 +15,7 @@ const partLabel = part === 0 ? "Series intro" : `Part ${part}`;
 const s = seriesBySlug[series];
 
 const url = new URL(`/posts/${post.slug}/`, Astro.site).toString();
+const ogImage = `/og/posts/${post.slug}.png`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -26,7 +27,7 @@ const jsonLd = {
   publisher: { "@type": "Person", name: "Anirudh" },
   mainEntityOfPage: { "@type": "WebPage", "@id": url },
   url,
-  image: new URL("/og-default.svg", Astro.site).toString(),
+  image: new URL(ogImage, Astro.site).toString(),
   articleSection: s?.title ?? series,
   keywords: tags.join(", "),
   isPartOf: { "@type": "CreativeWorkSeries", name: s?.title ?? series },
@@ -37,6 +38,7 @@ const jsonLd = {
   title={`${title} · ${s?.title ?? "Notebook"}`}
   description={dek}
   ogType="article"
+  image={ogImage}
   publishedTime={date}
   tags={tags}
   jsonLd={jsonLd}
