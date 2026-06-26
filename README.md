@@ -56,28 +56,29 @@ Add an entry to `src/series.ts`, then write posts with that `series` slug. A ser
 published posts automatically gets a card on the home and its own `/series/<slug>` page.
 Mark a series `status: "planned"` to tease it before any posts exist.
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare (Workers static assets)
 
-Static output means Pages just serves `dist/`.
+This site deploys as an **assets-only Worker** — Cloudflare builds `dist/` and serves it as
+static files (config in `wrangler.toml`). No server code or adapter needed.
 
 ### Git-connected (recommended)
-Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**:
+Cloudflare dashboard → **Workers & Pages → Create → Connect to Git** → pick this repo.
+Cloudflare reads `wrangler.toml`; the build/deploy commands are:
 
 | Setting | Value |
 |---|---|
-| Framework preset | Astro |
-| Build command | `pnpm build` (or `npm run build`) |
-| Build output directory | `dist` |
-| Environment variable | `NODE_VERSION = 20` |
+| Build command | `pnpm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+
+Node 20 is picked up from `.nvmrc`; pnpm is detected from `pnpm-lock.yaml`. Every push to
+`main` deploys; other branches get preview versions.
 
 ### Direct upload
 ```bash
 pnpm build
-npx wrangler pages deploy dist --project-name=welldun-blog
+npx wrangler deploy        # reads name + [assets].directory from wrangler.toml
 ```
 
-After the first deploy, set `site` in `astro.config.mjs` to your Pages URL (or custom
-domain) so canonical and Open Graph links are correct.
-
-> Fully static — no adapter needed. If a future post needs server rendering, add
-> `@astrojs/cloudflare` and switch `output` to `"server"`.
+After the first deploy, set `site` in `astro.config.mjs` to the deployed URL
+(`<name>.<subdomain>.workers.dev` or a custom domain) so canonical/OG links are correct.
