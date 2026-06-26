@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { SITE } from "../site";
 
 interface Props {
   title: string;
@@ -14,7 +15,7 @@ interface Props {
 
 const {
   title,
-  description = "Working notes on the systems I build — data platforms, voice agents, and systems engineering. Written to be readable even if it's not your corner of the stack.",
+  description = SITE.description,
   ogType = "website",
   image = "/og/default.png",
   publishedTime,
@@ -23,8 +24,8 @@ const {
   jsonLd,
 } = Astro.props;
 
-const SITE_NAME = "Anirudh — Notebook";
-const AUTHOR = "Anirudh";
+const SITE_NAME = `${SITE.name} — software × AI`;
+const AUTHOR = SITE.author;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 const rssUrl = new URL("/rss.xml", Astro.site);
@@ -84,12 +85,12 @@ const rssUrl = new URL("/rss.xml", Astro.site);
       <div class="wrap-wide bar">
         <a class="brand" href="/">
           <span class="brand-mark">◆</span>
-          <span class="brand-name">Anirudh</span>
-          <span class="brand-sub">notebook</span>
+          <span class="brand-name">welldun</span>
+          <span class="brand-sub">software × AI</span>
         </a>
         <nav class="nav-links">
-          <a href="/#series">Series</a>
-          <a href="/#about">About</a>
+          <a href="/#projects">Projects</a>
+          <a href="/about/">About</a>
         </nav>
       </div>
     </header>
@@ -100,8 +101,8 @@ const rssUrl = new URL("/rss.xml", Astro.site);
 
     <footer class="site-foot">
       <div class="wrap-wide bar">
-        <span>Anirudh's notebook — building things, and writing about how they work.</span>
-        <span>Built with Astro · deployed on Cloudflare Pages</span>
+        <span>welldun — building at the seam of software and AI.</span>
+        <span>Built with Astro · deployed on Cloudflare</span>
       </div>
     </footer>
   </body>
