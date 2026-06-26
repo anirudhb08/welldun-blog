@@ -1,0 +1,86 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { series as allSeries, seriesBySlug } from "../series";
+
+const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || a.data.part - b.data.part,
+);
+const countFor = (slug: string) => posts.filter((p) => p.data.series === slug).length;
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+---
+
+<Base title="Anirudh — building things, and writing about how they actually work">
+  <section class="wrap">
+    <div class="hero">
+      <p class="eyebrow kicker rise">Notebook</p>
+      <h1 class="rise rise-2">
+        I build things, and write about how they <span class="ital">actually</span> work.
+      </h1>
+      <p class="dek rise rise-3">
+        Working notes on the systems I build — data platforms, voice agents, and whatever
+        I'm currently nerding out on. Written to be readable even if it's not your corner
+        of the stack.
+      </p>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="section-head" id="series">
+      <h2 class="section-title">Series</h2>
+      <span class="section-note">multi-part deep dives</span>
+    </div>
+    <div class="series-grid">
+      {allSeries.map((s) => {
+        const n = countFor(s.slug);
+        const planned = s.status === "planned" || n === 0;
+        return planned ? (
+          <div class="series-card planned">
+            <div class="series-top">
+              <span class="series-name">{s.title}</span>
+              <span class="series-count mono">soon</span>
+            </div>
+            <p class="series-dek">{s.dek}</p>
+          </div>
+        ) : (
+          <a class="series-card" href={`/series/${s.slug}/`}>
+            <div class="series-top">
+              <span class="series-name">{s.title}</span>
+              <span class="series-count mono">{n} part{n === 1 ? "" : "s"}</span>
+            </div>
+            <p class="series-dek">{s.dek}</p>
+            <span class="series-go mono">Read the series →</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <hr class="rule-dash" />
+
+    <div class="section-head">
+      <h2 class="section-title">Latest writing</h2>
+      <span class="section-note">{posts.length} posts</span>
+    </div>
+    <nav class="toc">
+      {posts.map((p) => (
+        <a class="entry" href={`/posts/${p.slug}/`}>
+          <span class="entry-no mono">{seriesBySlug[p.data.series]?.title ?? p.data.series}</span>
+          <div class="entry-body">
+            <h2>{p.data.title}</h2>
+            <p class="dek">{p.data.dek}</p>
+          </div>
+          <span class="entry-meta">{p.data.readingTime ?? ""}<br />{fmt(p.data.date)}</span>
+        </a>
+      ))}
+    </nav>
+
+    <hr class="rule-dash" />
+
+    <div id="about" class="aside">
+      <span class="label">About</span>
+      I'm Anirudh. I like building systems and taking them apart in writing — the bets, the
+      gotchas, and the things you only learn by measuring. This notebook collects those
+      write-ups across whatever I'm working on. More series are on the way.
+    </div>
+  </section>
+</Base>
