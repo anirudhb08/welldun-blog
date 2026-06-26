@@ -8,9 +8,34 @@ const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
 );
 const countFor = (slug: string) => posts.filter((p) => p.data.series === slug).length;
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const site = Astro.site!.toString();
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Anirudh — Notebook",
+    url: site,
+    description:
+      "Working notes on the systems I build — data platforms, voice agents, and systems engineering.",
+    author: { "@type": "Person", name: "Anirudh" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Anirudh — Notebook",
+    url: site,
+    blogPost: posts.slice(0, 10).map((p) => ({
+      "@type": "BlogPosting",
+      headline: p.data.title,
+      datePublished: p.data.date.toISOString(),
+      url: new URL(`/posts/${p.slug}/`, site).toString(),
+    })),
+  },
+];
 ---
 
-<Base title="Anirudh — building things, and writing about how they actually work">
+<Base title="Anirudh — building things, and writing about how they actually work" jsonLd={jsonLd}>
   <section class="wrap">
     <div class="hero">
       <p class="eyebrow kicker rise">Notebook</p>
