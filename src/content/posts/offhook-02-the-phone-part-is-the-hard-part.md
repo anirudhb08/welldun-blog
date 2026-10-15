@@ -6,7 +6,7 @@ part: 2
 date: 2026-10-15
 readingTime: "8 min"
 tags: ["telephony", "twilio", "plivo", "voice"]
-draft: true
+draft: false
 ---
 
 When people imagine building a voice agent, they picture the AI: the speech recognition, the model, the voice. That part took us an afternoon to wire together. Getting a real phone to ring, connect and hang up cleanly took far longer.
