@@ -24,8 +24,8 @@ h1, h2 { text-wrap: balance; }
 
 @media (max-width: 720px) {
   .page { padding-block: var(--space-7); }
-  .display-xl { font-size: 40px; line-height: 42px; }
-  .display-lg { font-size: 36px; line-height: 40px; }
+  .display-xl { font-size: 40px; line-height: 44px; }
+  .display-lg { font-size: 34px; line-height: 38px; }
   .section { margin-top: var(--space-7); }
 }
 

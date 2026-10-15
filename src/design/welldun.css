@@ -12,7 +12,7 @@ body { margin: 0; font-family: var(--font-sans); background: var(--surface); col
 :where(.wd-btn, .wd-nav a, .wd-code-tab, .wd-code-copy, .wd-card, .wd-prose a, .wd-footer a):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* ---------- Wordmark ---------- */
-.wd-wordmark { display: inline-flex; align-items: baseline; gap: 0.5em; font-family: var(--font-display); font-weight: 720; font-size: 22px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.wd-wordmark { display: inline-flex; align-items: baseline; gap: 0.5em; font-family: var(--font-display); font-weight: 720; font-size: 22px; line-height: 1; letter-spacing: -0.015em; color: var(--ink); text-decoration: none; white-space: nowrap; }
 .wd-wordmark-dot { color: var(--signal); }
 .wd-wordmark-slash { font-family: var(--font-mono); font-weight: 400; color: var(--line-strong); letter-spacing: 0; }
 .wd-wordmark-product { font-family: var(--font-mono); font-size: 0.68em; font-weight: 500; letter-spacing: 0; color: var(--ink); }

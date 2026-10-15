@@ -31,7 +31,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
     padding: 80,
     fonts: ["./src/og/ArchivoExpanded-Bold.ttf", "./src/og/Archivo-Regular.ttf"],
     font: {
-      title: { color: [21, 22, 24], size: 58, weight: "Bold", lineHeight: 1.08, families: ["Archivo Expanded"] },
+      title: { color: [21, 22, 24], size: 60, weight: "Bold", lineHeight: 1.1, families: ["Archivo Expanded"] },
       description: { color: [91, 93, 97], size: 28, lineHeight: 1.4, families: ["Archivo"] },
     },
     format: "PNG",
