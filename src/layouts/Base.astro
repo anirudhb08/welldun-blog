@@ -1,4 +1,6 @@
 ---
+import ThemeHead from "../components/ThemeHead.astro";
+import ThemeSwitch from "../components/ThemeSwitch.astro";
 import "../styles/global.css";
 import { SITE } from "../site";
 
@@ -43,6 +45,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" || path.startsW
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeHead />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={AUTHOR} />
@@ -82,8 +85,6 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" || path.startsW
 
     <link rel="preload" href="/fonts/ArchivoExpanded.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/Archivo.woff2" as="font" type="font/woff2" crossorigin />
-    <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111214" media="(prefers-color-scheme: dark)" />
   </head>
   <body>
     <a class="skip" href="#content">Skip to content</a>
@@ -118,6 +119,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" || path.startsW
           <a href="/rss.xml">RSS</a>
           <a href="/about/">About</a>
         </nav>
+        <ThemeSwitch />
       </div>
     </footer>
     <script>
