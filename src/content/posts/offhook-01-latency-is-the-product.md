@@ -6,7 +6,7 @@ part: 1
 date: 2026-10-15
 readingTime: "8 min"
 tags: ["latency", "voice", "llm", "pipecat"]
-draft: true
+draft: false
 ---
 
 The first time we got a call working end to end, everything was technically correct. The agent heard us, understood us and gave a sensible answer. It still felt broken, because after we stopped talking there was a pause long enough to wonder whether the line had dropped.
@@ -80,6 +80,6 @@ A reply can be fast and still feel slow if it sounds robotic. People judge how r
 3. **Choose the model by its first token.** Where it runs (dedicated fast inference or a shared queue) can matter more than its size.
 4. **Look for fixed costs.** The longest wait in our pipeline wasn't a model at all. It was a default setting deciding when the caller had stopped talking.
 
-Offhook is open source at [welldunai/offhook](https://github.com/welldunai/offhook). Set `VOICE_DEBUG_LOGGING=1` and the browser playground shows these per-stage timings live on your own calls.
+Offhook is open source, and the docs and quickstart are at [offhook.welldun.ai](https://offhook.welldun.ai). Set `VOICE_DEBUG_LOGGING=1` and the browser playground shows these per-stage timings live on your own calls.
 
 Next up: **the phone part is the hard part**, where two carriers do the same job in surprisingly different ways.

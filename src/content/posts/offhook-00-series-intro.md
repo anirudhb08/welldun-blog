@@ -6,7 +6,7 @@ part: 0
 date: 2026-10-15
 readingTime: "5 min"
 tags: ["intro", "voice", "agents"]
-draft: true
+draft: false
 ---
 
 AI agents are good at reading and writing. Most of the real world still runs on phone calls: confirming an appointment, chasing a delivery, booking a table, checking whether a shop has something in stock. If agents are going to do useful work for people, at some point they have to pick up the phone.
@@ -43,6 +43,6 @@ We'll go roughly in the order we ran into things:
 
 Anyone curious about how voice agents work under the hood, whether or not you have built one. We'll define each piece of jargon the first time it appears, and back every claim with something we built or measured.
 
-The code is on GitHub at [welldunai/offhook](https://github.com/welldunai/offhook) under the Apache-2.0 license.
+Offhook is open source under the Apache-2.0 license. The docs and quickstart are at [offhook.welldun.ai](https://offhook.welldun.ai).
 
 Next up: **latency is the product**, or why the gap before the agent starts talking matters more than anything it says.
