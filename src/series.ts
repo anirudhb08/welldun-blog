@@ -15,10 +15,10 @@ export const series: Series[] = [
     status: "active",
   },
   {
-    slug: "voice-infra",
-    title: "Voice Infra",
-    dek: "A multi-tenant voice-calling backend — STT + LLM + TTS, bring-your-own-keys, consumable by any third party.",
-    status: "planned",
+    slug: "offhook",
+    title: "Offhook",
+    dek: "Building an open-source, self-hostable API for AI phone calls: STT, an LLM and TTS over a real phone line.",
+    status: "active",
   },
   {
     slug: "email-infra",
