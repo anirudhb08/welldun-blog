@@ -8,7 +8,8 @@ export default defineConfig({
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {
-      theme: "github-light", // light code theme to match the paper aesthetic
+      // Colours come from the design system's code tokens (see .wd-prose pre.astro-code in global.css).
+      theme: "css-variables",
       wrap: true,
     },
   },

@@ -7,8 +7,8 @@ const posts = await getCollection("posts", ({ data }) => !data.draft);
 // one entry per generated PNG: a site default + every post
 const pages: Record<string, { title: string; description: string }> = {
   default: {
-    title: "welldun — building at the seam of software and AI.",
-    description: "Field notes on multi-tenant infrastructure: entity platforms, voice, email.",
+    title: "Notes from building infrastructure for AI agents.",
+    description: "welldun · open infrastructure for AI agents that do real work.",
   },
 };
 for (const p of posts) {
@@ -22,15 +22,17 @@ for (const p of posts) {
 export const { getStaticPaths, GET } = OGImageRoute({
   param: "route",
   pages,
+  // welldun design system: surface ground, ink title in Archivo Expanded, the switchboard strip along the foot.
   getImageOptions: (_path, page) => ({
     title: page.title,
     description: page.description,
-    bgGradient: [[239, 233, 218]], // vellum
-    border: { color: [216, 71, 43], width: 18, side: "inline-start" }, // vermilion left rule
+    bgImage: { path: "./src/og/background.png", fit: "cover" },
+    logo: { path: "./src/og/wordmark.png" },
     padding: 80,
+    fonts: ["./src/og/ArchivoExpanded-Bold.ttf", "./src/og/Archivo-Regular.ttf"],
     font: {
-      title: { color: [27, 36, 56], size: 64, weight: "Bold", lineHeight: 1.15 },
-      description: { color: [70, 80, 102], size: 30, lineHeight: 1.4 },
+      title: { color: [21, 22, 24], size: 58, weight: "Bold", lineHeight: 1.08, families: ["Archivo Expanded"] },
+      description: { color: [91, 93, 97], size: 28, lineHeight: 1.4, families: ["Archivo"] },
     },
     format: "PNG",
   }),

@@ -21,26 +21,32 @@ const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "n
 ---
 
 <Base title={`${meta.title} — a series`} description={meta.dek}>
-  <section class="wrap">
-    <div class="hero">
-      <p class="eyebrow kicker rise"><a href="/" class="crumb">Notebook</a> / Series</p>
-      <h1 class="rise rise-2">{meta.title}</h1>
-      <p class="dek rise rise-3">{meta.dek}</p>
-    </div>
+  <div class="wd-container page">
+    <header class="page-head">
+      <p class="wd-eyebrow"><a href="/" class="crumb">Writing</a><span class="wd-eyebrow-sep">/</span>Series</p>
+      <h1 class="display-lg">{meta.title}</h1>
+      <p class="lede body-lg">{meta.dek}</p>
+    </header>
 
-    <hr class="rule" />
-
-    <nav class="toc">
-      {posts.map((p) => (
-        <a class="entry" href={`/posts/${p.slug}/`}>
-          <span class="entry-no mono">{String(p.data.part).padStart(2, "0")}</span>
-          <div class="entry-body">
-            <h2>{p.data.title}</h2>
-            <p class="dek">{p.data.dek}</p>
-          </div>
-          <span class="entry-meta">{p.data.readingTime ?? ""}<br />{fmt(p.data.date)}</span>
-        </a>
-      ))}
-    </nav>
-  </section>
+    <section class="section" aria-labelledby="parts-title">
+      <div class="section-head">
+        <h2 id="parts-title">All parts</h2>
+        <span class="section-note">{posts.length} posts</span>
+      </div>
+      <ul class="post-list">
+        {posts.map((p) => (
+          <li>
+            <a class="post-row" href={`/posts/${p.slug}/`}>
+              <span class="wd-eyebrow">{p.data.part === 0 ? "Intro" : `Part ${p.data.part}`}</span>
+              <span class="post-row-body">
+                <span class="post-row-title">{p.data.title}</span>
+                <span class="post-row-dek">{p.data.dek}</span>
+              </span>
+              <span class="post-row-meta">{fmt(p.data.date)}{p.data.readingTime && <><br />{p.data.readingTime}</>}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
 </Base>

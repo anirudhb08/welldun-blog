@@ -24,11 +24,18 @@ const {
   jsonLd,
 } = Astro.props;
 
-const SITE_NAME = `${SITE.name} — software × AI`;
+const SITE_NAME = SITE.name;
 const AUTHOR = SITE.author;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 const rssUrl = new URL("/rss.xml", Astro.site);
+
+const NAV = [
+  { label: "Writing", href: "/" },
+  { label: "About", href: "/about/" },
+];
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === "/" ? path === "/" || path.startsWith("/posts/") || path.startsWith("/series/") : path.startsWith(href));
 ---
 
 <!doctype html>
@@ -73,37 +80,51 @@ const rssUrl = new URL("/rss.xml", Astro.site);
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/ArchivoExpanded.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Archivo.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111214" media="(prefers-color-scheme: dark)" />
   </head>
   <body>
-    <header class="site-head">
-      <div class="wrap-wide bar">
-        <a class="brand" href="/">
-          <span class="brand-mark">◆</span>
-          <span class="brand-name">welldun</span>
-          <span class="brand-sub">software × AI</span>
-        </a>
-        <nav class="nav-links">
-          <a href="/#projects">Projects</a>
-          <a href="/about/">About</a>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="wd-header">
+      <div class="wd-container wd-header-inner">
+        <a class="wd-wordmark" href="/" aria-label="welldun, home"><span>welldun<span class="wd-wordmark-dot">.</span></span></a>
+        <nav class="wd-nav" aria-label="Main">
+          {NAV.map((l) => (
+            <a href={l.href} aria-current={isCurrent(l.href) ? "page" : undefined}>{l.label}</a>
+          ))}
         </nav>
+        <div class="wd-header-actions">
+          <a class="wd-btn wd-btn--ghost wd-btn--sm" href="/rss.xml">RSS</a>
+          <a class="wd-btn wd-btn--secondary wd-btn--sm" href={SITE.authorUrl}>Follow on X</a>
+        </div>
       </div>
     </header>
 
-    <main>
+    <main id="content">
       <slot />
     </main>
 
-    <footer class="site-foot">
-      <div class="wrap-wide bar">
-        <span>welldun — building at the seam of software and AI.</span>
-        <span>Built with Astro · deployed on Cloudflare</span>
+    <footer class="wd-footer">
+      <div class="wd-container wd-footer-inner">
+        <div class="wd-row">
+          <a class="wd-wordmark" href="/" aria-label="welldun, home"><span>welldun<span class="wd-wordmark-dot">.</span></span></a>
+          <span>Open infrastructure for AI agents, built in public.</span>
+        </div>
+        <nav class="wd-footer-links" aria-label="Footer">
+          <a href="https://github.com/welldunai">GitHub</a>
+          <a href={SITE.authorUrl}>X</a>
+          <a href="/rss.xml">RSS</a>
+          <a href="/about/">About</a>
+        </nav>
       </div>
     </footer>
+    <script>
+      const head = document.querySelector(".wd-header");
+      const onScroll = () => head?.setAttribute("data-scrolled", String(window.scrollY > 4));
+      onScroll();
+      addEventListener("scroll", onScroll, { passive: true });
+    </script>
   </body>
 </html>
