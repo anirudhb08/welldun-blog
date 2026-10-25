@@ -52,21 +52,22 @@ const jsonLd = [
         <span class="section-note">one per project</span>
       </div>
       <div class="card-grid">
-        {allSeries.map((s) => {
+        {allSeries.map((s, i) => {
           const n = countFor(s.slug);
           const planned = s.status === "planned" || n === 0;
+          const tint = ["peach", "blue", "mint", "lavender", "yellow"][i % 5];
           return planned ? (
-            <div class="wd-card is-planned">
-              <div class="wd-card-top"><p class="wd-eyebrow">Series</p><span class="wd-badge">Soon</span></div>
-              <h3 class="wd-card-title">{s.title}</h3>
-              <p class="wd-card-desc">{s.dek}</p>
+            <div class:list={["wd-tile", `wd-tile--${tint}`, "is-planned"]}>
+              <span class="wd-tile-tag">Coming soon</span>
+              <h3 class="wd-tile-title">{s.title}</h3>
+              <p class="wd-tile-desc">{s.dek}</p>
             </div>
           ) : (
-            <a class="wd-card" href={`/series/${s.slug}/`}>
-              <div class="wd-card-top"><p class="wd-eyebrow">Series</p></div>
-              <h3 class="wd-card-title">{s.title}</h3>
-              <p class="wd-card-desc">{s.dek}</p>
-              <div class="wd-card-meta"><span>{n} part{n === 1 ? "" : "s"}</span><span class="wd-card-go" aria-hidden="true">→</span></div>
+            <a class:list={["wd-tile", `wd-tile--${tint}`]} href={`/series/${s.slug}/`}>
+              <span class="wd-tile-tag">{n} part{n === 1 ? "" : "s"}</span>
+              <h3 class="wd-tile-title">{s.title}</h3>
+              <p class="wd-tile-desc">{s.dek}</p>
+              <span class="wd-tile-go">Read the series <span class="wd-arrow" aria-hidden="true">→</span></span>
             </a>
           );
         })}

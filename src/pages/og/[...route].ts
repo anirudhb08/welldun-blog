@@ -22,17 +22,17 @@ for (const p of posts) {
 export const { getStaticPaths, GET } = OGImageRoute({
   param: "route",
   pages,
-  // welldun design system: surface ground, ink title in Archivo Expanded, the switchboard strip along the foot.
+  // welldun design system v2: warm surface, ink title in Figtree, pastel tiles and a waveform along the foot.
   getImageOptions: (_path, page) => ({
     title: page.title,
     description: page.description,
     bgImage: { path: "./src/og/background.png", fit: "cover" },
     logo: { path: "./src/og/wordmark.png" },
     padding: 80,
-    fonts: ["./src/og/ArchivoExpanded-Bold.ttf", "./src/og/Archivo-Regular.ttf"],
+    fonts: ["./src/og/Figtree-Bold.ttf", "./src/og/Figtree-Regular.ttf"],
     font: {
-      title: { color: [21, 22, 24], size: 60, weight: "Bold", lineHeight: 1.1, families: ["Archivo Expanded"] },
-      description: { color: [91, 93, 97], size: 28, lineHeight: 1.4, families: ["Archivo"] },
+      title: { color: [31, 29, 26], size: 64, weight: "Bold", lineHeight: 1.08, families: ["Figtree"] },
+      description: { color: [107, 102, 94], size: 30, lineHeight: 1.4, families: ["Figtree"] },
     },
     format: "PNG",
   }),
