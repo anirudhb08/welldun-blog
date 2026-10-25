@@ -61,11 +61,11 @@ h1, h2 { text-wrap: balance; }
 .wd-prose pre.astro-code {
   --astro-code-color-text: var(--code-ink);
   --astro-code-color-background: var(--code-bg);
-  --astro-code-token-constant: var(--code-ink);
-  --astro-code-token-string: var(--code-signal);
-  --astro-code-token-string-expression: var(--code-signal);
+  --astro-code-token-constant: var(--code-number);
+  --astro-code-token-string: var(--code-string);
+  --astro-code-token-string-expression: var(--code-string);
   --astro-code-token-comment: var(--code-muted);
-  --astro-code-token-keyword: var(--code-ink);
+  --astro-code-token-keyword: var(--code-key);
   --astro-code-token-parameter: var(--code-ink);
   --astro-code-token-function: var(--code-ink);
   --astro-code-token-punctuation: var(--code-muted);
